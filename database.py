@@ -35,10 +35,10 @@ def _exe_raw_sql(sql):
 
 
 # People
-# ToDo add Id AUTOINCREMENT
 def create_bd():
     sql = """
     CREATE TABLE if not exists people(
+        Id INTEGER PRIMARY KEY UNIQUE,
         Number VARCHAR(255) NOT NULL,
         Name VARCHAR(255) NOT NULL,
         Link VARCHAR(255),
