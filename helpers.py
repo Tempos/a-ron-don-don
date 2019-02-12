@@ -1,8 +1,37 @@
+import logging
+from constants import RIA_LOG_NAME
+
+
 def number_format(num):
     num = num.replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
     if num.startswith('0'):
         num = '38' + num
     return num
+
+
+def logger_call():
+    """ Configure our logger """
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter(
+        '%(asctime)s -- %(module)s -- %(levelname)s -- %(message)s',
+        datefmt='%m/%d/%Y %H:%M:%S')
+
+    # Save log to file
+    file_handler = logging.FileHandler(RIA_LOG_NAME)
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(formatter)
+
+    # Show log in console
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.INFO)
+    stream_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
+    return logger
 
 
 class ElementHasAttribute(object):
