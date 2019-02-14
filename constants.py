@@ -1,4 +1,7 @@
 from selenium.webdriver.common.by import By
+
+LOG_NAME = 'a-ron-don-don.log'
+
 # OLX
 URL_PATH = 'https://www.olx.ua/transport/legkovye-avtomobili/?search%5Bfilter_float_price%3Afrom%5D=1500000'
 
@@ -48,4 +51,3 @@ RIA_PRICE = (By.XPATH, '//*[@id="showLeftBarView"]/section[1]/div[1]/strong')
 RIA_PROFILE = (By.CLASS_NAME, 'seller_info_name')
 RIA_ADDRESS = (By.CLASS_NAME, 'item_inner')
 RIA_DESCRIPTION = (By.XPATH, '//*[@id="heading-cars"]/div/h1')
-RIA_LOG_NAME = 'a-ron-don-don.log'

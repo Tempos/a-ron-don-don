@@ -1,5 +1,5 @@
 import logging
-from constants import RIA_LOG_NAME
+from constants import LOG_NAME
 
 
 def number_format(num):
@@ -20,7 +20,7 @@ def logger_call():
         datefmt='%m/%d/%Y %H:%M:%S')
 
     # Save log to file
-    file_handler = logging.FileHandler(RIA_LOG_NAME)
+    file_handler = logging.FileHandler(LOG_NAME)
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
 

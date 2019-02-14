@@ -9,6 +9,11 @@ from constants import (RIA_PATH, RIA_RESULTS, RIA_TICKETS, RIA_NAME,
 from database import insert_into_table, is_not_phone_exists
 from helpers import logger_call
 
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--incognito")
+chrome_options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=chrome_options)
+
 logger = logger_call()
 
 
@@ -17,11 +22,6 @@ class ThreadLinks(Thread):
         Thread.__init__(self)
 
     def run(self):    # Gather ticket links
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--incognito")
-        chrome_options.add_argument("--headless")
-        driver = webdriver.Chrome(chrome_options=chrome_options)
-
         tickets_list = []
         driver.get(RIA_PATH)
         logger.info('Start piling the links...')
@@ -34,6 +34,12 @@ class ThreadLinks(Thread):
                 tickets_list.append(ticket.get_attribute('href'))
         logger.info(f'Links are gathered. There are {len(tickets_list)} in total')
 
+    def get_links():
+        """Gather ticket links"""
+        for page in range(page_num):
+            driver.get(f'{RIA_PATH}&page={page}')
+            for ticket in driver.find_elements(*RIA_TICKETS):
+                tickets_list.append(ticket.get_attribute('href'))
         driver.close()
 
 
@@ -42,11 +48,6 @@ class ThreadData(Thread):
         Thread.__init__(self)
 
     def run(self, tickets_list):     # Gather data from tickets
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--incognito")
-        chrome_options.add_argument("--headless")
-        driver = webdriver.Chrome(chrome_options=chrome_options)
-
         logger.info('Start looping through the links...')
         for ticket in tickets_list:
             driver.get(ticket)
