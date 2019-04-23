@@ -51,3 +51,4 @@ RIA_PRICE = (By.XPATH, '//*[@id="showLeftBarView"]/section[1]/div[1]/strong')
 RIA_PROFILE = (By.CLASS_NAME, 'seller_info_name')
 RIA_ADDRESS = (By.CLASS_NAME, 'item_inner')
 RIA_DESCRIPTION = (By.XPATH, '//*[@id="heading-cars"]/div/h1')
+RIA_THREAD_COUNT = 5

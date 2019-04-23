@@ -1,4 +1,5 @@
 import logging
+from selenium import webdriver
 from constants import LOG_NAME
 
 
@@ -9,6 +10,21 @@ def number_format(num):
     return num
 
 
+def timer(start, end):
+    hours, rem = divmod(end-start, 3600)
+    minutes, seconds = divmod(rem, 60)
+    return "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
+
+
+def webdriver_call():
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument("--incognito")
+    chrome_options.add_argument("--headless")
+    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver.maximize_window()
+    return driver
+
+
 def logger_call():
     """ Configure our logger """
 
@@ -16,8 +32,10 @@ def logger_call():
     logger.setLevel(logging.DEBUG)
 
     formatter = logging.Formatter(
-        '%(asctime)s -- %(module)s -- %(levelname)s -- %(message)s',
-        datefmt='%m/%d/%Y %H:%M:%S')
+        '%(asctime)s - %(module)s: %(lineno)d\t%(levelname)s - '
+        '%(threadName)s:\t%(message)s',
+        datefmt='%m/%d/%Y %H:%M:%S'
+    )
 
     # Save log to file
     file_handler = logging.FileHandler(LOG_NAME)
@@ -46,7 +64,9 @@ class ElementHasAttribute(object):
         self.attribute_value = attribute_value
 
     def __call__(self, driver):
-        element = driver.find_element(*self.locator)  # Finding the referenced element
+        # Finding the referenced element
+        element = driver.find_element(*self.locator)
+
         if self.attribute_value in element.get_attribute(self.attribute_name):
             return element
         else:

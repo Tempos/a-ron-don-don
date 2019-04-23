@@ -2,7 +2,7 @@ import sqlite3
 
 path_database = "base.db"
 
-connect = sqlite3.connect(path_database)
+connect = sqlite3.connect(path_database, check_same_thread=False)
 cursor = connect.cursor()
 
 view_data = (
@@ -91,6 +91,18 @@ def is_not_phone_exists(phone):
     sql = "SELECT Number FROM people WHERE Number is '{}';".format(phone)
     resp = _exe_raw_sql(sql)
     return not any(resp)
+
+
+def number_exists(number):
+    """Return True or False"""
+    return _exe_raw_sql("SELECT Link FROM people WHERE Link is '{}';"
+                        .format(number))
+
+
+def link_exists(link):
+    """Return True or False"""
+    return _exe_raw_sql("SELECT Link FROM people WHERE Link is '{}';"
+                        .format(link))
 
 
 # Telegram
