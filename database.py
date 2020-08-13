@@ -58,8 +58,8 @@ def insert_into_table(
     data = dict(zip(view_data,
                     [number, name, link, price, profile, information, address]))
 
-    cols = ', '.join("'{}'".format(col) for col in data.keys())
-    vals = ', '.join(':{}'.format(col) for col in data.keys())
+    cols = ', '.join("'{}'".format(col) for col in data)
+    vals = ', '.join(':{}'.format(col) for col in data)
     sql = 'INSERT INTO people ({}) VALUES ({})'.format(cols, vals)
     try:
         cursor.execute(sql, data)
@@ -82,7 +82,7 @@ def filter_by_links(links):
     sql = "SELECT Link FROM people WHERE Link in ({});".format(
         ', '.join(["'{}'".format(item) for item in links]))
     resp = _exe_raw_sql(sql)
-    return set(links) - set([item[0] for item in resp])
+    return set(links) - {item[0] for item in resp}
 
 
 def is_not_phone_exists(phone):
@@ -112,8 +112,8 @@ def create_bd_telegram():
 def insert_into_telegram(number, name, _id=1, seen=None, profile=None):
     data = dict(zip(view_data_telegram, (_id, number, name, seen, profile)))
 
-    cols = ', '.join("'{}'".format(col) for col in data.keys())
-    vals = ', '.join(':{}'.format(col) for col in data.keys())
+    cols = ', '.join("'{}'".format(col) for col in data)
+    vals = ', '.join(':{}'.format(col) for col in data)
     sql = 'INSERT INTO telegram ({}) VALUES ({})'.format(cols, vals)
     try:
         cursor.execute(sql, data)

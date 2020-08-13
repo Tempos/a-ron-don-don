@@ -98,8 +98,6 @@ for _line in get_all():
             driver.find_element_by_xpath(CLOSE).click()
         except Exception as err:
             print(type(err))
-            pass
-
         driver.find_element_by_tag_name('body').send_keys(Keys.ESCAPE + Keys.ESCAPE + Keys.ESCAPE)
 
 driver.close()
